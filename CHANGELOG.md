@@ -1,3 +1,7 @@
+# 0.10.0-wingify-patch1 (2016-08-23)
+
+_This release adds `vwo-typeahead-dropdown-item` to `typeahead-match.html` file for easier identification of the dropdown items.
+
 # 0.10.0 (2014-01-13)
 
 _This release adds AngularJS 1.2 support_

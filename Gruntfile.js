@@ -63,6 +63,20 @@ module.exports = function(grunt) {
         },
         src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.js'
+      },
+      dist_unversioned: {
+        options: {
+          banner: '<%= meta.banner %><%= meta.modules %>\n'
+        },
+        src: [], //src filled in by build task
+        dest: '<%= dist %>/<%= filename %>.js'
+      },
+      dist_tpls_unversioned: {
+        options: {
+          banner: '<%= meta.banner %><%= meta.all %>\n<%= meta.tplmodules %>\n'
+        },
+        src: [], //src filled in by build task
+        dest: '<%= dist %>/<%= filename %>-tpls.js'
       }
     },
     copy: {
@@ -99,6 +113,14 @@ module.exports = function(grunt) {
       dist_tpls:{
         src:['<%= concat.dist_tpls.dest %>'],
         dest:'<%= dist %>/<%= filename %>-tpls-<%= pkg.version %>.min.js'
+      },
+      dist_unversioned:{
+        src:['<%= concat.dist.dest %>'],
+        dest:'<%= dist %>/<%= filename %>.min.js'
+      },
+      dist_tpls_unversioned: {
+        src:['<%= concat.dist_tpls.dest %>'],
+        dest:'<%= dist %>/<%= filename %>-tpls.min.js'
       }
     },
     html2js: {
@@ -330,6 +352,12 @@ module.exports = function(grunt) {
                  .concat(srcFiles));
     //Set the concat-with-templates task to concat the given src & tpl modules
     grunt.config('concat.dist_tpls.src', grunt.config('concat.dist_tpls.src')
+                 .concat(srcFiles).concat(tpljsFiles));
+    //Set the concat task to concatenate the given src modules
+    grunt.config('concat.dist_unversioned.src', grunt.config('concat.dist_unversioned.src')
+                 .concat(srcFiles));
+    //Set the concat-with-templates task to concat the given src & tpl modules
+    grunt.config('concat.dist_tpls_unversioned.src', grunt.config('concat.dist_tpls_unversioned.src')
                  .concat(srcFiles).concat(tpljsFiles));
 
     grunt.task.run(['concat', 'uglify']);
